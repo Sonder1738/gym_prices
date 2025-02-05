@@ -1,0 +1,2 @@
+Host - Netlify
+Domain - Verpex
