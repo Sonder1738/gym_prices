@@ -436,19 +436,6 @@ if bhub_response.status_code == 200:
 else:
     print(f'Failed to retrieve the webpage. Status code: {bhub_response.status_code}')
 
-
-finaldata.append({
-        "Type":"Weekday Offpeak/Peak",
-        "Camp5 Single Gym": "10am-4pm/4pm-10pm",
-        "Camp5 Multi Gym": "10am-4pm/4pm-10pm",
-        "Camp5 Utropolis": "10am-4pm/4pm-10pm",
-        "Batuu Boulder only": "10am-5pm/5pm-10pm",
-        "Batuu Full gym": "10am-5pm/5pm-10pm",
-        "Bump": "12pm-5pm/5pm-11pm",
-        "Bhub": "11am-4pm,9pm-11pm/4pm-9pm"
-
-    })
-
 finaldata.append({
         "Type":"Daily Peak",
         "Camp5 Single Gym": data[1]["price"],
