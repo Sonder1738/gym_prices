@@ -24,3 +24,11 @@ jobs:
 
       - name: Run Python Script
         run: python climbscraper.py  # Replace with your script
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add json.txt
+          git commit -m "Update output.txt from scheduled job" || echo "No changes to commit"
+          git push
