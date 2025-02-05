@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Python Script and Append Output
         run: |
-          python climbscraper.py >> json.txt
+          python climbscraper.py > json.txt
 
       - name: Commit and Push Changes
         run: |
