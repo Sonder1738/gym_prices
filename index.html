@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Prices</title>
+    <style>
+        .slider {
+            width: 400px;
+            height: 20px;
+            background: white;
+            border-radius: 40px;
+        }
+        .slidecontainer {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Add spacing between elements */
+        }
+        
+        .slider-info {
+            display: flex;
+            justify-content: space-between;
+            width: 200px; /* Adjust width as needed */
+        }
+        
+        .slidecontainer p {
+            margin: 0; /* Remove extra margin for consistent alignment */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Gym Prices<small> - beta version</small></h1>
+<div id="tableContainer"></div>
+
+<script>
+let gymPrices = [];
+
+window.addEventListener('DOMContentLoaded', function () {
+    const filePath = 'json.txt';
+
+    fetch(filePath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to load JSON file: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data)) {
+                throw new Error("JSON data must be an array of objects.");
+            }
+
+            gymPrices = data;
+            renderTable(data);
+        })
+        .catch(error => {
+            document.getElementById('tableContainer').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        });
+});
+
+function renderTable(data) {
+    const tableContainer = document.getElementById('tableContainer');
+    const table = document.createElement('table');
+
+    const headers = Object.keys(data[0]);
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+
+        headers.forEach(header => {
+            const td = document.createElement('td');
+            td.textContent = row[header] || '';
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    tableContainer.innerHTML = '';
+    tableContainer.appendChild(table);
+}
+
+function parsePrice(priceString) {
+    return parseFloat(priceString.replace(/[^\d.]/g, '')) || 0;
+}
+</script>
+
+<h1>Price Saver</h1>
+<small>Eg. If you climb 3 times a week, set climb per week to 3. If 2 of those climbs are during peak hours, slide the slider until 'Peak' displays 2.</small>
+<div style="height: 50px;"></div>
+<label for="gym">Choose a gym:</label>
+<select name="gym" id="gym">
+    <option value="Camp5 Single Gym">Camp5 Single Gym</option>
+    <option value="Camp5 Multi Gym">Camp5 Multi Gym</option>
+    <option value="Camp5 Utropolis">Camp5 Utropolis</option>
+    <option value="Batuu Boulder only">Batuu Boulder only</option>
+    <option value="Batuu Full gym">Batuu Full gym</option>
+    <option value="Bump">Bump</option>
+    <option value="Bhub">Bhub</option>
+</select>
+
+<label for="quantity">Climb per week (1-7):</label>
+<input type="tel" id="quantity" value="0" name="quantity" min="1" max="7" onchange="updateRange()">
+
+<div class="slidecontainer">
+    <p>Offpeak: <span id="offpeak">0</span></p>
+    <input type="range" min="0" max="0" value="0" class="slider" id="myRange">
+    <p>Peak: <span id="peak">0</span></p>
+</div>
+
+<label>If you climb in <span id="chosenGym1">Camp5</span>, you are paying RM <span id="pricePaid1">0</span> as compared to RM <span id="comparisonPrice1">0</span> per 10day.</label>
+<br>
+<label>If you climb in <span id="chosenGym">Camp5</span>, you are paying RM <span id="pricePaid">0</span> as compared to RM <span id="comparisonPrice">0</span> per month.</label>
+<br>
+<label>If you climb in <span id="chosenGym2">Camp5</span>, you are paying RM <span id="pricePaid2">0</span> as compared to RM <span id="comparisonPrice2">0</span> per year.</label>
+
+<script>
+const slider = document.getElementById("myRange");
+const offpeakDisplay = document.getElementById("offpeak");
+const peakDisplay = document.getElementById("peak");
+const chosenGymDisplay = document.getElementById("chosenGym");
+const chosenGymDisplay2 = document.getElementById("chosenGym2");
+const chosenGymDisplay1 = document.getElementById("chosenGym1")
+const pricePaidDisplay = document.getElementById("pricePaid");
+const comparisonPriceDisplay = document.getElementById("comparisonPrice");
+const pricePaidDisplay2 = document.getElementById("pricePaid2");
+const comparisonPriceDisplay2 = document.getElementById("comparisonPrice2");
+const pricePaidDisplay1 = document.getElementById("pricePaid1");
+const comparisonPriceDisplay1 = document.getElementById("comparisonPrice1");
+
+function updateRange() {
+    const quantity = document.getElementById("quantity").value;
+    slider.max = quantity;
+}
+
+const quantityInput = document.getElementById("quantity");
+quantityInput.addEventListener("focus", function() {
+    // Select the input value when the user clicks/taps on the input field
+    this.select();
+});
+
+document.getElementById("quantity").addEventListener("input", function (event) {
+    let value = parseInt(this.value, 10);
+    
+    if (isNaN(value)) {
+        value = 1; // Default to 1 if the value is invalid
+    } else if (value < 1) {
+        value = 1; // Prevent the value from going below 1
+    } else if (value > 7) {
+        value = 7; // Prevent the value from going above 7
+    }
+
+    // Update the input field with the new value
+    this.value = value;
+
+    // Update the slider max value to match the input value
+    const slider = document.getElementById("myRange");
+    slider.max = value;
+});
+
+
+
+slider.oninput = function () {
+    const quantity = parseInt(document.getElementById("quantity").value, 10) || 0;
+    const gym = document.getElementById("gym").value;
+
+    const offpeakClimbs = quantity - this.value;
+    const peakClimbs = this.value;
+
+    offpeakDisplay.textContent = offpeakClimbs;
+    peakDisplay.textContent = peakClimbs;
+    chosenGymDisplay.textContent = gym;
+    chosenGymDisplay2.textContent = gym;
+    chosenGymDisplay1.textContent = gym;
+
+    const gymData = gymPrices.find(item => Object.keys(item).includes(gym));
+
+    if (gymData) {
+        const offpeakPrice = parsePrice(gymPrices[1][gym]);
+        const peakPrice = parsePrice(gymData[gym]);
+        const monthlyPrice = parsePrice(gymPrices[3][gym]);
+        const yearlyPrice = parsePrice(gymPrices[7][gym]);
+        const tendayPrice = parsePrice(gymPrices[2][gym]);
+
+        const totalCost = ((offpeakClimbs * offpeakPrice) + (peakClimbs * peakPrice)) * 4;
+
+        pricePaidDisplay.textContent = totalCost.toFixed(2);
+        comparisonPriceDisplay.textContent = monthlyPrice.toFixed(2);
+        
+        const totalCost2 = ((offpeakClimbs * offpeakPrice) + (peakClimbs * peakPrice)) * 48;
+
+        pricePaidDisplay2.textContent = totalCost2.toFixed(2);
+        comparisonPriceDisplay2.textContent = yearlyPrice.toFixed(2);
+        
+        const totalClimbs = Number(offpeakClimbs) + Number(peakClimbs); // Calculate total climbs
+        const totalCost1 = totalClimbs > 0 
+            ? ((offpeakClimbs * offpeakPrice) + (peakClimbs * peakPrice)) / totalClimbs * 10 
+            : 0; // Avoid division by zero
+
+        pricePaidDisplay1.textContent = totalCost1.toFixed(2);
+        comparisonPriceDisplay1.textContent = tendayPrice.toFixed(2);
+    } else {
+        pricePaidDisplay.textContent = "0";
+        comparisonPriceDisplay.textContent = "0";
+    }
+};
+</script>
+<div style="height: 200px;"></div>
+<h1>Disclaimer</h1>
+<ul>
+    <li>Written in Python for scraping and JavaScript for the UI.</li>
+    <li>Prices are fetched legally from each website every minute.</li>
+    <li>Camp5 Multi Gym Day pass is the same as Camp5 Single Gym day pass. This is a workaround so price saver works. I know it does not look good visually but trust me.</li>
+    <li>Im not a web developer.</li>
+    <li>Formula is (n1*O+n2*P)*n weeks in duration.</li>
+    <li>n1=offpeak visits O=offpeak price n2=peak visits P=peak price.</li>
+    <li>Let me know if there is any suggestions or improvement ideas or if my math is wrong</li>
+    <li>Also..im too lazy to add error checking incase any site changes their DOM structure so everything WILL fail if that happens.</li>
+</ul>
+
+<em>By Derick</em>
+</body>
+</html>
