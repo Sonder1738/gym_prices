@@ -4,21 +4,21 @@ from bs4 import BeautifulSoup
 import json
 
 # Headers for BS
-headers = {
-        "Accept": "application/json, text/plain, */*",
-        "Accept-Language": "en-GB,en;q=0.9",
-        "Cache-Control": "no-cache",
-        "Connection": "keep-alive",
-        "Origin": "https://boulderstory.com",
-        "Referer": "https://boulderstory.com/",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "cross-site",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-        "sec-ch-ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"Windows"',
-    }
+# headers = {
+#         "Accept": "application/json, text/plain, */*",
+#         "Accept-Language": "en-GB,en;q=0.9",
+#         "Cache-Control": "no-cache",
+#         "Connection": "keep-alive",
+#         "Origin": "https://boulderstory.com",
+#         "Referer": "https://boulderstory.com/",
+#         "Sec-Fetch-Dest": "empty",
+#         "Sec-Fetch-Mode": "cors",
+#         "Sec-Fetch-Site": "cross-site",
+#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+#         "sec-ch-ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
+#         "sec-ch-ua-mobile": "?0",
+#         "sec-ch-ua-platform": '"Windows"',
+#     }
 
 # URL of the website you want to scrape
 camp5_ou_url = 'https://www.camp5.com/1utama/'
@@ -26,8 +26,8 @@ camp5_ut_url = 'https://www.camp5.com/utropolis/'
 batuu_url = 'https://www.batuuclimbing.com/pricing'
 bump_url = 'https://www.bumpbouldering.com/pricing'
 bhub_url = 'https://bhubbouldering.com/plan-pricing/'
-bs_url1 = 'https://customer-api.rezerv.co/v1/pricing/package'
-bs_url2 = 'https://customer-api.rezerv.co/v1/pricing/membership'
+# bs_url1 = 'https://customer-api.rezerv.co/v1/pricing/package'
+# bs_url2 = 'https://customer-api.rezerv.co/v1/pricing/membership'
 
 # Send a GET request to the website
 camp5_ou_response = requests.get(camp5_ou_url)
@@ -35,7 +35,7 @@ camp5_ut_response = requests.get(camp5_ut_url)
 batuu_response = requests.get(batuu_url)
 bump_response = requests.get(bump_url)
 bhub_response = requests.get(bhub_url)
-bs_response1 = requests.get(bs_url1,headers=headers)
+# bs_response1 = requests.get(bs_url1,headers=headers)
 
 data = []
 finaldata = []
@@ -455,9 +455,15 @@ if bhub_response.status_code == 200:
 else:
     print(f'Failed to retrieve the webpage. Status code: {bhub_response.status_code}')
 
-if bs_response1.status_code == 200:
-    print(bs_response1.json()["data"][2]["package"][0]["packagePricing"]["price"])
-    #print(json.dumps(bs_response1.json()))  # Print response body
+# if bs_response1.status_code == 200:
+
+#     data.append({
+#             "key": "bs_10d",
+#             "category": "ADULT",
+#             "price": bhub_m_price[9].text.replace("\n","").strip().replace(",","").replace("RM","RM ")
+#         })
+#     print(bs_response1.json()["data"][2]["package"][0]["packagePricing"]["price"])
+#     #print(json.dumps(bs_response1.json()))  # Print response body
 
 
 
@@ -549,7 +555,7 @@ finaldata.append({
 
 #     })
     # print(x['key'])
-# print(json.dumps(finaldata))
+print(json.dumps(finaldata))
 # print(data)
 # print(json.dumps(data))
 
