@@ -6,9 +6,10 @@
     <title>Gym Prices - dev branch</title>
         <style>
         .slider {
+            -webkit-appearance: none;
             width: 400px;
             height: 20px;
-            background: white;
+            background: rgb(209, 209, 209);
             border-radius: 40px;
         }
         .slidecontainer {
@@ -29,11 +30,13 @@
 
         /* Thumb: webkit */
         input[type="range"]::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none; 
-          height: 30px;
-          width: 30px;
-          background-image: url("https://ibaslogic.github.io/hosted-assets/smile.png");
+        -webkit-appearance: none;
+        appearance: none; 
+        height: 30px;
+        width: 30px;
+        /*   background-color: #f50; remove this*/
+        background-image: url("https://ibaslogic.github.io/hosted-assets/smile.png");
+        background-size: cover;
         }
             
         body {
