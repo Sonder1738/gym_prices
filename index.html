@@ -10,7 +10,21 @@
             height: 20px;
             background: white;
             border-radius: 40px;
-            background-image: url("https://ibaslogic.github.io/hosted-assets/smile.png");
+        }
+        /* Thumb: webkit */
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none; 
+          height: 30px;
+          width: 30px;
+        /*   background-color: #f50; remove this*/
+          background-image: url("https://ibaslogic.github.io/hosted-assets/smile.png");
+          background-size: cover;
+          border-radius: 50%;
+          border: none;
+          transition: .2s ease-in-out;
+          /*  rotate thumb  */
+          transform: rotateZ(var(--thumb-rotate, 0deg));
         }
         .slidecontainer {
             display: flex;
