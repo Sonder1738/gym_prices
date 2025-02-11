@@ -62,7 +62,7 @@
                 --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
                 --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
                 --clip-further: calc(100% + 1px);
-                --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
+                --box-fill: calc(-99vmax - var(--thumb-width, var(--thumb-height))) 0 0
                     100vmax currentColor;
         
                 width: var(--thumb-width, var(--thumb-height));
@@ -106,8 +106,8 @@
             -webkit-appearance: none;
             appearance: none; 
             height: 25px;
-            width: 25px;
-            /*   background-color: #f50; remove this*/
+            width: 23px;
+            background-color: white;
             background-image: url("https://raw.githubusercontent.com/Sonder1738/gym_prices/refs/heads/main/bb_hold.png");
             background-size: cover;
             border-radius: 50%;
