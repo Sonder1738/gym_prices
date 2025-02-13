@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gym Prices</title>
+    <button onclick="toggledm()">Toggle Darkmode</button>
         <style>
             .slidecontainer {
                 display: flex;
@@ -181,6 +182,17 @@
             textarea {
                 width: 100%;
                 height: 100px;
+            }
+            .dark-mode {
+                background-color: black;
+                color: white;
+            }
+            .dark-mode th {
+                border-color: #ffffff;
+                background-color: black;
+            }
+            .dark-mode input[type="range"]::-webkit-slider-thumb {
+                background-color: black;
             }
         </style>
 </head>
@@ -392,6 +404,11 @@ slider.oninput = function () {
         comparisonPriceDisplay.textContent = "0";
     }
 };
+
+function toggledm() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
 </script>
 <div style="height: 200px;"></div>
 <h1>Disclaimer</h1>
