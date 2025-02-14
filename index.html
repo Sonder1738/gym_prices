@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gym Prices</title>
-    <button onclick="toggledm()">Toggle Darkmode</button>
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <label class="switch">
+            <input type="checkbox" onclick="toggledm()">
+            <span class="slider"></span>
+        </label>
+        <p style="margin: 0;">Toggle Dark mode</p>
+    </div>
+    
         <style>
             .slidecontainer {
                 display: flex;
@@ -194,6 +201,52 @@
             .dark-mode input[type="range"]::-webkit-slider-thumb {
                 background-color: black;
             }
+
+            /* Toggle switch styling */
+            .switch {
+            position: relative;
+            display: inline-block;
+            width: 54px;
+            height: 28px;
+            }
+
+            .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            }
+
+            .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+            }
+
+            .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            }
+
+            input:checked + .slider {
+            background-color: #2196F3;
+            }
+
+            input:checked + .slider:before {
+            transform: translateX(26px);
+            }
         </style>
 </head>
 <body>
@@ -274,6 +327,7 @@ function parsePrice(priceString) {
             <th>Camp5</th>
             <th>Batuu</th>
             <th>Bump</th>
+            <th>Bump PBJ</th>
             <th>Bhub</th>
         </tr>
         <tr>
@@ -281,6 +335,7 @@ function parsePrice(priceString) {
             <td>10am-4pm / 4pm-10pm</td>
             <td>10am-5pm / 5pm-10pm</td>
             <td>12pm-5pm / 5pm-11pm</td>
+            <td>10am-5pm / 5pm-10pm</td>
             <td>11am-4pm, 9pm-11pm / 4pm-9pm</td>
         </tr>
     </table>
