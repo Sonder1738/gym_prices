@@ -7,7 +7,7 @@
     <div style="display: flex; align-items: center; gap: 10px;">
         <label class="switch">
             <input type="checkbox" onclick="toggledm()">
-            <span class="slider"></span>
+            <span class="slider2"></span>
         </label>
         <p style="margin: 0;">Toggle Dark mode</p>
     </div>
@@ -216,6 +216,30 @@
             height: 0;
             }
 
+            .slider2 {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+            }
+
+            .slider2:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: rgb(255, 255, 255);
+            transition: .4s;
+            border-radius: 50%;
+            }
+
             .slider {
             position: absolute;
             cursor: pointer;
@@ -235,16 +259,16 @@
             width: 20px;
             left: 4px;
             bottom: 4px;
-            background-color: white;
+            /* background-color: rgb(255, 255, 255); */
             transition: .4s;
             border-radius: 50%;
             }
 
-            input:checked + .slider {
+            input:checked + .slider2 {
             background-color: #2196F3;
             }
 
-            input:checked + .slider:before {
+            input:checked + .slider2:before {
             transform: translateX(26px);
             }
         </style>
